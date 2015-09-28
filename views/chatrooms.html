@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="../css/chatroom.css">
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+</head>
+<body>
+	<div class="cr-container">
+		<h1 class="cr-title">ChatCAT</h1>
+		<div class="cr-userbox">
+			<img src="{{user.profilePic}}" class="userPic">
+			<h3 class="userName">{{user.fullName}} | <a href="#">Çıkış</a></h3>
+		</div>
+		<div class="cr-newroom">
+			<input type="text" class="newRoom" autocomplete="off">
+			<button id="create">Oda yarat</button>
+		</div>
+		<div class="cr-roomlist">
+			<ul class="roomlist">
+				<a href="#"><li>NodeJS</li></a>
+				<a href="#"><li>Cloud Computing</li></a>
+				<a href="#"><li>MongoDB</li></a>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
