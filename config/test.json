@@ -1,0 +1,11 @@
+{
+  "cookie_secret": "gizlishey",
+  "cookie": {
+    "secure": false
+  },
+  "redis": {
+    "port": 11386,
+    "host": "pub-redis-11386.us-east-1-2.4.ec2.garantiadata.com",
+    "pass": "chatcat"
+  }
+}

@@ -3,8 +3,13 @@ module.exports = function(grunt) {
   var path = require('path');
 
   grunt.initConfig({
+    setEnvironment:{
+      dev: 'development',
+      prod: 'production',
+      test: 'test'
+    },
     express: {
-      dev: {
+      all: {
         options: {
           script: path.resolve('./app.js')
         }
@@ -20,11 +25,36 @@ module.exports = function(grunt) {
           'Gruntfile.js',
           'public/**/*.*',
           'views/**/*.*',
-          'routes/*.js'
+          'routes/*.js',
+          'config/*.json',
+          'lib/*.js'
         ]
       }
     }
   });
 
-  grunt.registerTask('dev', ['express:dev', 'watch:all']);
+  grunt.registerMultiTask('setEnvironment',
+    'sets environment variable to development or production',
+    function () {
+      process.env.NODE_ENV = this.data;
+    }
+  );
+
+  grunt.registerTask('dev', [
+    'setEnvironment:dev',
+    'express:all',
+    'watch:all'
+  ]);
+
+  grunt.registerTask('test', [
+    'setEnvironment:test',
+    'express:all',
+    'watch:all'
+  ]);
+
+  grunt.registerTask('prod', [
+    'setEnvironment:prod',
+    'express:all',
+    'watch:all'
+  ]);
 };

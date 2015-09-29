@@ -9,9 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-redis": "^2.5.1",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
     "grunt": "^0.4.5",
-    "hogan-express": "^0.5.2"
+    "hogan-express": "^0.5.2",
+    "redis": "^2.0.1"
   },
   "devDependencies": {
     "grunt-contrib-watch": "^0.6.1",
