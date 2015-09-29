@@ -14,6 +14,7 @@
     "express-session": "^1.11.3",
     "grunt": "^0.4.5",
     "hogan-express": "^0.5.2",
+    "q": "^1.4.1",
     "redis": "^2.0.1"
   },
   "devDependencies": {
