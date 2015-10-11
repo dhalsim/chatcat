@@ -9,16 +9,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-module-path": "^1.0.4",
     "connect-redis": "^2.5.1",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "grunt": "^0.4.5",
     "hogan-express": "^0.5.2",
+    "mongoose": "^4.1.9",
+    "passport": "^0.3.0",
+    "passport-facebook": "^2.0.0",
+    "promise": "^7.0.4",
     "q": "^1.4.1",
     "redis": "^2.0.1"
   },
   "devDependencies": {
+    "grunt-concurrent": "^2.0.3",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-exec": "^0.4.6",
     "grunt-express-server": "^0.5.1",
     "load-grunt-tasks": "^3.3.0"
   }

@@ -1,5 +1,5 @@
 module.exports = function(session, redis_config){
-  var Q = require("q");
+  var Q = require('q');
 
   var environment = (process.env.NODE_ENV || 'development');
   function getStore() {
@@ -46,6 +46,10 @@ module.exports = function(session, redis_config){
   }
 
   promise.done();
+
+  if(!store){
+    throw Error('Couldn\'t set store');
+  }
 
   return store;
 };

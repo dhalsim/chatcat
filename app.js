@@ -1,6 +1,9 @@
+require('app-module-path').addPath(__dirname);
+
 var express = require('express');
 var path = require('path');
-var config = require('./config/environment.js');
+var config = require('src/config');
+var passport = require('src/lib/facebookLogin.js').init(config);
 
 var app = express();
 
@@ -13,7 +16,7 @@ app.engine('html', require('hogan-express'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var session = require('express-session');
-var store =  require('./lib/sessionStore.js')(session, config.redis);
+var store =  require('src/lib/sessionStore.js')(session, config.redis);
 
 app.use(session({
   secret: config.cookie_secret,
@@ -23,7 +26,10 @@ app.use(session({
   cookie: config.cookie
 }));
 
-require('./routes/routes.js')(express, app);
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('src/routes').init(express, app, config);
 
 app.listen(3000, function () {
   console.log('chatcat 3000 portunda çalışıyor');

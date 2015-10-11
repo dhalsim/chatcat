@@ -1,0 +1,19 @@
+{
+  "cookie_secret": "gizlishey",
+  "cookie": {
+    "secure": false
+  },
+  "redis": {
+    "port": 11386,
+    "host": "pub-redis-11386.us-east-1-2.4.ec2.garantiadata.com",
+    "pass": "chatcat"
+  },
+  "fb": {
+    "appId": "420842171444313",
+    "appSecret": "473fb4f496452d8dfb684df5f0ab1cf5",
+    "callbackURL": "http://localhost:3000/auth/facebook/callback"
+  },
+  "mongo":{
+    "url": "mongodb://dhalsim:chatcat@ds041673.mongolab.com:41673/chatcat"
+  }
+}
