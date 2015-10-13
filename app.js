@@ -10,6 +10,7 @@ app.set('view engine', 'html');
 // template'ler için .html uzantısını kullan
 app.engine('html', require('hogan-express'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('connect-livereload')());
 
 require('./routes/routes.js')(express, app);
 
