@@ -16,17 +16,17 @@ module.exports = function(grunt) {
         tasks: [
           'exec:mongo',
           'exec:redis',
-          'watch:all',
-          'express:all'
+          'express:all',
+          'watch:all'
         ]
       }
     },
     exec: {
       mongo: {
-        command: 'mongod'
+        command: './mongo.sh'
       },
       redis: {
-        command: 'redis-server'
+        command: './redis.sh'
       }
     },
     express: {

@@ -46,10 +46,5 @@ module.exports = function(session, redis_config){
   }
 
   promise.done();
-
-  if(!store){
-    throw Error('Couldn\'t set store');
-  }
-
   return store;
 };
