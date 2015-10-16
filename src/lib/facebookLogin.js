@@ -1,12 +1,12 @@
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
+var passport = require('passport'),
+  FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports.init = function(config) {
-  var facebook_config = config.fb;
-  var mongoose = require('mongoose');
-  var User = require('src/models/user.js')(mongoose);
-  var userModel = mongoose.model('loginUser', User);
-  var mongoConnection = false;
+  var facebook_config = config.fb,
+    mongoose = require('mongoose'),
+    User = require('src/models/user.js')(mongoose),
+    userModel = mongoose.model('loginUser', User),
+    mongoConnection = false;
 
   // user, id property'si ile serialize ediliyor
   // session'a yazılacak
@@ -44,7 +44,6 @@ module.exports.init = function(config) {
         dbUser.profileID = profile.id;
         dbUser.fullName = profile.displayName;
         dbUser.profilePictureURL = profile.photos[0].value;
-
         dbUser.save();
       }
 
