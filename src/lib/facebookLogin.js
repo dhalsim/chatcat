@@ -6,6 +6,7 @@ module.exports.init = function(config) {
   var mongoose = require('mongoose');
   var User = require('src/models/user.js')(mongoose);
   var userModel = mongoose.model('loginUser', User);
+  var mongoConnection = false;
 
   // user, id property'si ile serialize ediliyor
   // session'a yazılacak
@@ -22,10 +23,21 @@ module.exports.init = function(config) {
 
   var verifyCallback = function(accessToken, refreshToken, profile, done) {
     var mongo_config = config.mongo;
-    var connectionPromise = require('src/lib/mongoConnection.js')(mongo_config, mongoose);
-    connectionPromise.then(function() {
-      var query = userModel.findOne({profileID: profile.id});
-      return query.exec();
+    var promise;
+
+    if(!mongoConnection){
+      promise = require('src/lib/mongoConnection.js')(mongo_config, mongoose).then(function() {
+        mongoConnection = true;
+      }).catch(function (err) {
+        console.error(err);
+        done(err);
+      });
+    } else {
+      promise = new Promise(function(resolve, reject){ resolve(); });
+    }
+
+    promise.then(function() {
+      return userModel.findOne({profileID: profile.id}).exec();
     }).then(function(dbUser) {
       if(!dbUser){
         dbUser = new userModel();
