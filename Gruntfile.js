@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         tasks: [
           'exec:mongo',
           'exec:redis',
-          'express:all',
+          'nodemon',
           'watch:all'
         ]
       }
@@ -29,13 +29,15 @@ module.exports = function(grunt) {
         command: './redis.sh'
       }
     },
-    express: {
-      options: {
-        background: false
-      },
-      all: {
+    nodemon: {
+      dev: {
+        script: 'app.js',
         options: {
-          script: path.resolve('./app.js')
+          watch: [
+            'app.js',
+            'Gruntfile.js',
+            'src/**/*.js'
+          ]
         }
       }
     },
@@ -49,9 +51,7 @@ module.exports = function(grunt) {
           'Gruntfile.js',
           'public/**/*.*',
           'views/**/*.*',
-          'routes/*.js',
-          'config/*.json',
-          'lib/*.js'
+          'src/**/*.js'
         ]
       }
     }
