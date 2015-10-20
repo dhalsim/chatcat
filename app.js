@@ -3,7 +3,7 @@ require('app-module-path').addPath(__dirname);
 var express = require('express');
 var path = require('path');
 var config = require('src/config');
-var passport = require('src/lib/facebookLogin.js').init(config);
+var passport = require('src/lib/facebookLogin').init(config.fb);
 
 var app = express();
 
@@ -18,22 +18,29 @@ app.use(require('connect-livereload')());
 
 var session = require('express-session');
 var store =  require('src/lib/sessionStore.js')(session, config.redis);
-
-app.use(session({
+var sessionMiddleware = session({
   secret: config.cookie_secret,
   store: store,
   resave: false,
   saveUninitialized: true,
   cookie: config.cookie
-}));
+});
+app.use(sessionMiddleware);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+io.use(function(socket, next) {
+  sessionMiddleware(socket.request, socket.request.res, next);
+});
+
+require('src/lib/socket')(io);
 require('src/routes').init(express, app, config);
 
-app.listen(3000, function () {
-  console.log('chatcat 3000 portunda çalışıyor');
+server.listen(config.port, function () {
+  console.log('chatcat ' + config.port + ' portunda çalışıyor');
 });
 
 module.exports = app;

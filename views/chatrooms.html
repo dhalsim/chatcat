@@ -4,8 +4,6 @@
 	<meta charset="UTF-8">
 	<title>{{title}}</title>
 	<link rel="stylesheet" href="../css/chatroom.css">
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
 </head>
 <body>
 	<div class="cr-container">
@@ -20,11 +18,15 @@
 		</div>
 		<div class="cr-roomlist">
 			<ul class="roomlist">
-				<a href="#"><li>NodeJS</li></a>
-				<a href="#"><li>Cloud Computing</li></a>
-				<a href="#"><li>MongoDB</li></a>
+
 			</ul>
 		</div>
 	</div>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="/socket.io/socket.io.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.socket_host = '{{socket_host}}';
+	</script>
+	<script src="../js/chatrooms.js" charset="utf-8"></script>
 </body>
 </html>

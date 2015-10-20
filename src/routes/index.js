@@ -1,6 +1,6 @@
-module.exports.init = function (express, app) {
-  var router = express.Router();
-  var passport = require('passport');
+module.exports.init = function (express, app, config) {
+  var router = express.Router(),
+    passport = require('passport');
 
   router.get('/', function (req, res) {
     res.render('index', {title: 'Welcome to ChatCAT'});
@@ -27,7 +27,7 @@ module.exports.init = function (express, app) {
       : 1;
 
     res.render('chatrooms', {title: 'Chatrooms ' +
-      session.viewCount, user:req.user});
+      session.viewCount, user:req.user, socket_host: config.socket_host});
   });
 
   router.get('/auth/facebook',
