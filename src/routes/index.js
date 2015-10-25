@@ -1,6 +1,7 @@
 module.exports.init = function (express, app, config) {
   var router = express.Router(),
-    passport = require('passport');
+    passport = require('passport'),
+    roomAdapter = require('src/lib/redisAdapters/roomAdapter');
 
   router.get('/', function (req, res) {
     res.render('index', {title: 'Welcome to ChatCAT'});
@@ -15,19 +16,21 @@ module.exports.init = function (express, app, config) {
   }
 
   router.get('/chatrooms', securePage, function (req, res, next) {
-    var session = req.session;
+    res.render('chatrooms', {title: 'Chatrooms',
+      user:req.user, socket_host: config.socket_host});
+  });
 
-    if (!session) {
-      // handle error
-      return next(new Error('oh no'));
-    }
-
-    session.viewCount = session.viewCount
-      ? session.viewCount + 1
-      : 1;
-
-    res.render('chatrooms', {title: 'Chatrooms ' +
-      session.viewCount, user:req.user, socket_host: config.socket_host});
+  router.get('/room/:id', securePage, function (req, res, next) {
+    var roomId = req.params.id;
+    roomAdapter.getRoomById(roomId).then(function (room) {
+      req.session.room = room;
+      
+      res.render('room', {
+        user: JSON.stringify(req.user),
+        room: JSON.stringify(room),
+        socket_host: config.socket_host
+      });
+    });
   });
 
   router.get('/auth/facebook',

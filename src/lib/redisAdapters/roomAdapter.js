@@ -5,23 +5,34 @@ var shortid = require('src/lib/utils').shortid,
   redisConnection = require('src/lib/redisAdapters/redisConnection'),
   client = redisConnection.getClient(),
   subscriberClient = redisConnection.getClient(true),
-  Promise = require('bluebird');
+  Promise = require('bluebird'),
+  smembers = Promise.promisify(client.smembers, client),
+  hgetall = Promise.promisify(client.hgetall, client);
+
+var ROOMS = 'rooms',
+  ROOM = 'room';
 
 module.exports.createRoom = function(data) {
-  var key = 'room:' + shortid();
+  var id = shortid();
+  var key = ROOMS + ':' + id;
 
   Promise.promisifyAll(redis.Multi.prototype);
+  data.id = id;
   var multi = client.multi();
   multi.hmset(key, objToArray(data));
-  multi.sadd('rooms', key);
+  multi.sadd(ROOMS, key);
   return multi.execAsync();
 };
 
-module.exports.getRooms = function () {
-  var smembers = Promise.promisify(client.smembers, client);
-  var hgetall = Promise.promisify(client.hgetall, client);
+module.exports.getRoomById = function (roomId) {
+  var key = ROOMS + ':' + roomId;
+  return hgetall(key).then(function (room) {
+    return unflatten(room);
+  });
+};
 
-  return smembers('rooms').then(function (keys) {
+module.exports.getRooms = function () {
+  return smembers(ROOMS).then(function (keys) {
     var getJobs = keys.map(function (key) {
       return hgetall(key);
     });
@@ -35,7 +46,7 @@ module.exports.getRooms = function () {
 };
 
 module.exports.subscribeRooms = function (callback) {
-  subscriberClient.subscribe('__keyspace@0__:rooms');
+  subscriberClient.subscribe('__keyspace@0__:' + ROOMS);
 
   subscriberClient.on("message", function (key, command) {
     console.log(key, command);

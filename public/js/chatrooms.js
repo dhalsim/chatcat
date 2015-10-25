@@ -14,11 +14,15 @@ $(function () {
     rooms.forEach(function(room){
       var $li = $("<li>");
       $li.text(room.name);
-      $li.attr('data-id', room._id);
+      $li.attr('data-id', room.id);
       $li.attr('data-createdby', room.createdBy);
       $li.attr('data-cratedat', room.createdAt);
 
-      $ul.append($li);
+      var $link = $('<a>');
+      $link.attr('href', 'room/' + room.id);
+
+      $link.append($li);
+      $ul.append($link);
     });
   });
 
