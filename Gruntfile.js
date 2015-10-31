@@ -33,7 +33,6 @@ module.exports = function(grunt) {
       dev: {
         script: 'app.js',
         options: {
-          nodeArgs: ['--debug-brk'],
           watch: [
             'app.js',
             'Gruntfile.js',
