@@ -9,15 +9,21 @@ module.exports = function(grunt) {
       test: 'test'
     },
     concurrent: {
+      options: {
+        logConcurrentOutput: true
+      },
       dev: {
-        options: {
-          logConcurrentOutput: true
-        },
         tasks: [
           'exec:mongo',
           'exec:redis',
           'nodemon',
           'watch:all'
+        ]
+      },
+      test: {
+        tasks: [
+          'exec:mongo',
+          'exec:redis'
         ]
       }
     },
@@ -71,8 +77,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'setEnvironment:test',
-    'express:all',
-    'watch:all'
+    'concurrent:test'
   ]);
 
   grunt.registerTask('prod', [
