@@ -18,11 +18,10 @@
 
 NAME=chatcat
 PM2=/usr/bin/pm2
-GRUNT=/usr/bin/grunt
 USER=vagrant
+APP_HOME="/home/vagrant/chatcat"
 
-export PATH=/usr/local/bin:$PATH
-export GRUNT_HOME="/home/vagrant/chatcat"
+export NODE_ENV="test"
 
 get_user_shell() {
     local shell=$(getent passwd ${1:-`whoami`} | cut -d: -f7 | sed -e 's/[[:space:]]*$//')
@@ -37,15 +36,12 @@ get_user_shell() {
 
 super() {
     local shell=$(get_user_shell $USER)
-    su - $USER -s $shell -c "PATH=$PATH; GRUNT_HOME=$GRUNT_HOME $*"
+    su - $USER -s $shell -c "NODE_ENV=$NODE_ENV $*"
 }
 
 start() {
     echo "Starting $NAME"
-    super
-    cd $GRUNT_HOME
-    $GRUNT test
-    super $PM2 start $GRUNT_HOME/app.js
+    super $PM2 start $APP_HOME/app.js
 }
 
 stop() {

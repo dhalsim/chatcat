@@ -22,8 +22,6 @@ module.exports = function(grunt) {
       },
       test: {
         tasks: [
-          'exec:mongo',
-          'exec:redis'
         ]
       }
     },

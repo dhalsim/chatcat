@@ -14,7 +14,10 @@ app.set('view engine', 'html');
 app.engine('html', require('hogan-express'));
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('connect-livereload')());
+
+if(process.env.NODE_ENV === 'development') {
+  app.use(require('connect-livereload')());
+}
 
 var session = require('express-session');
 var store =  require('src/lib/sessionStore.js')(session, config.redis);

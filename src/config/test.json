@@ -3,11 +3,16 @@
     "secure": false
   },
   "redis": {
-    "port": 11386,
-    "host": "pub-redis-11386.us-east-1-2.4.ec2.garantiadata.com",
-    "pass": "chatcat"
+    "port": 6379,
+    "host": "localhost"
   },
   "mongo":{
-    "url": "mongodb://dhalsim:chatcat@ds041673.mongolab.com:41673/chatcat"
+    "url": "mongodb://localhost/chatcat"
+  },
+  "socket_host": "http://nodeapp.com:3000",
+  "fb": {
+    "appId": "428633183998545",
+    "appSecret": "cad605acbaddf4b90a2ba9e7ef329c68",
+    "callbackURL": "http://nodeapp.com:3000/auth/facebook/callback"
   }
 }
