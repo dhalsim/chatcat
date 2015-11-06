@@ -24,13 +24,15 @@ module.exports.init = function (express, app, config) {
     var roomId = req.params.id;
     roomAdapter.getRoomById(roomId).then(function (room) {
       req.session.room = room;
-      
+
       res.render('room', {
         user: JSON.stringify(req.user),
         room: JSON.stringify(room),
         socket_host: config.socket_host
       });
-    });
+    }).catch(function (err) {
+      next(err);
+    }).done();
   });
 
   router.get('/auth/facebook',

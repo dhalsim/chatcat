@@ -9,6 +9,8 @@ var shortid = require('src/lib/utils').shortid,
   smembers = Promise.promisify(client.smembers, client),
   hgetall = Promise.promisify(client.hgetall, client);
 
+Promise.longStackTraces();
+
 var ROOMS = 'rooms',
   ROOM = 'room';
 
@@ -27,6 +29,10 @@ module.exports.createRoom = function(data) {
 module.exports.getRoomById = function (roomId) {
   var key = ROOMS + ':' + roomId;
   return hgetall(key).then(function (room) {
+    if(!room) {
+      throw new Error('Room id not found:' + roomId);
+    }
+
     return unflatten(room);
   });
 };

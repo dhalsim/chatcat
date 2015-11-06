@@ -25,7 +25,9 @@
     "q": "^1.4.1",
     "redis": "^2.0.1",
     "shortid": "^2.2.4",
-    "socket.io": "^1.3.7"
+    "socket.io": "^1.3.7",
+    "winston": "^2.1.0",
+    "winston-redis": "git://github.com/winstonjs/winston-redis.git"
   },
   "devDependencies": {
     "connect-livereload": "^0.5.3",

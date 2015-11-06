@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var config = require('src/config');
 var passport = require('src/lib/facebookLogin').init(config.fb);
-
+var logger = require('src/lib/logging');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +38,10 @@ var io = require('socket.io')(server);
 io.use(function(socket, next) {
   sessionMiddleware(socket.request, socket.request.res, next);
 });
+
+app.use(logger.loggerMiddleware);
+app.use(logger.exceptionMiddleware);
+process.on('uncaughtException', logger.logAndCrash);
 
 require('src/lib/socket')(io);
 require('src/routes').init(express, app, config);
