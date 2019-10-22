@@ -18,7 +18,7 @@
     "grunt": "^0.4.5",
     "hogan-express": "^0.5.2",
     "moment": "^2.10.6",
-    "mongoose": "^4.1.9",
+    "mongoose": "^5.7.6",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",
     "promise": "^7.0.4",
